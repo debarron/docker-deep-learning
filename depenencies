@@ -1,0 +1,1 @@
+pip3 install -U numpy pandas sklearn matplotlib tensorflow keras pickle

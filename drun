@@ -1,1 +1,21 @@
-docker run -d -it -p 8888:8888 --network=host --device=/dev/kfd --device=/dev/dri --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $HOME/dockerx:/dockerx rocm/tensorflow:latest
+#!/bin/bash
+
+#$1 dir to be mounted in the $HOME directory
+# of the default user (/root)
+
+WD="$1"
+base=$(basename $WD)
+
+docker run -d -it -p 8888:8888 \
+  --network=host \
+  --device=/dev/kfd \
+  --device=/dev/dri \
+  --ipc=host \
+  --shm-size 4G \
+  --memory=12g \
+  --group-add video \
+  --cap-add=SYS_PTRACE \
+  --security-opt seccomp=unconfined \
+  -v $WD:/root/$base \
+  --name jupyter_notebook \
+  rocm/tensorflow:latest
